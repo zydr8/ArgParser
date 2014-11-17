@@ -10,17 +10,12 @@ using std::endl;
 using std::stringstream;
 using std::find;
 
-ArgParser::ArgParser(int argc, char *argv[])
-{
-    CollectCmdArgs(argc, argv);
-}
-
 ArgParser::~ArgParser()
 {
     mArgs.clear();
 }
 
-void ArgParser::CollectCmdArgs(int nargs, char *args[])
+void ArgParser::Parse(int nargs, char *args[])
 {
     mArgs.clear();
     for (int i = 0; i < nargs; ++i)

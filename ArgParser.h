@@ -14,6 +14,7 @@
 
 #include <string>
 #include <vector>
+#include <cassert>
 
 using std::string;
 using std::vector;
@@ -29,8 +30,18 @@ class ArgParser
     };
 
     public:
-        explicit ArgParser(int argc, char* argv[]);
+        
+        // Static reference style singleton implementation
+        // http://stackoverflow.com/questions/270947/can-any-one-provide-me-a-sample-of-singleton-in-c/271104#271104
+        static ArgParser &Instance()
+        {
+            static ArgParser instance;
+            return instance;
+        }
+        
         ~ArgParser();
+
+        void Parse(int nargs, char *args[]);
 
         const vector<string>& GetArgs() const { return mArgs; }
         const string GetArgString() const;
@@ -42,9 +53,7 @@ class ArgParser
         void PrintArgs() const;
 #endif
 
-
     private:
-        void CollectCmdArgs(int nargs, char *args[]);
         ArgumentForm GetArgumentForm(const string &arg) const;
 
         bool isArgShortForm(const string &arg) const;
@@ -59,8 +68,9 @@ class ArgParser
     
     // Singleton Implementation
     private: 
-        ArgParser(const ArgParser &) { }
-        const ArgParser &operator=(const ArgParser &) { }
+        ArgParser() { }
+        ArgParser(const ArgParser &);
+        ArgParser &operator=(const ArgParser &);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cassert>
 
 #include "ArgParser.h"
 
@@ -16,7 +17,8 @@ void PromptContinue()
 
 int main(int argc, char *argv[])
 {
-    ArgParser argParser(argc, argv);
+    ArgParser &argParser = ArgParser::Instance();
+    argParser.Parse(argc, argv);
 
     cout << argParser.GetArgString();
     cout << endl;
@@ -25,7 +27,7 @@ int main(int argc, char *argv[])
     cout << endl;
 
     if (argParser.HasFlag("-Q"))
-        cout << "Flag \"Q\" found!" << endl;
+        cout << "Flag \"Q\" found!!!" << endl;
 
     if (argParser.HasFlag("asdf"))
         cout << "You should not see this..." << endl;
